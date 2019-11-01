@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/11 | wyl</title>
+  <title>mysql 常用命令 | wyl</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一些学习知识点">
+  <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475登录mysql -u root -p1、显示当前数据库服务器中的数据库列表：mysql&amp;gt; SHOW DATABA">
 <meta name="keywords" content="java">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wyl">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;11&#x2F;index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql 常用命令">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;01&#x2F;mysql&#x2F;index.html">
 <meta property="og:site_name" content="wyl">
-<meta property="og:description" content="一些学习知识点">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475登录mysql -u root -p1、显示当前数据库服务器中的数据库列表：mysql&amp;gt; SHOW DATABA">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-01T08:35:55.000Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="wyl" type="application/atom+xml">
@@ -156,76 +157,155 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-mysql" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      mysql 常用命令
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/01/mysql/" class="archive-article-date">
+
+        
+        <a href="/2019/11/01/mysql/" class="archive-article-date">
   	<time datetime="2019-11-01T08:35:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/01/mysql/">mysql 常用命令</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">登录</span><br><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、显示当前数据库服务器中的数据库列表：</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW DATABASES;</span><br><span class="line"></span><br><span class="line">2、建立数据库：</span><br><span class="line"></span><br><span class="line">mysql&gt; CREATE DATABASE 库名;</span><br><span class="line"></span><br><span class="line">3、授权用户：</span><br><span class="line">//&apos;%&apos;代表所有可访问</span><br><span class="line">grant all privileges on 库名.* to 用户名@localhost identified by &apos;1234&apos;;</span><br><span class="line"></span><br><span class="line">4、查询用户</span><br><span class="line">select user,host from mysql.user;</span><br><span class="line"></span><br><span class="line">insert into mysql.user(Host,User,Password) values(&quot;%&quot;,&quot;data&quot;,password(&quot;ccdnlabroot123456&quot;));</span><br><span class="line">5、创建用户</span><br><span class="line">create user &apos;data&apos;@&apos;%&apos; identified by &apos;0Kq2Ejw9$cyj&apos;; </span><br><span class="line"></span><br><span class="line">6.用户权限</span><br><span class="line">grant 权限 on 数据库.* to 用户名@登录主机 identified by &quot;密码&quot;;</span><br><span class="line">所有数据库的某些权限： 　 </span><br><span class="line">grant select,delete,update,create,drop on *.* to test@&quot;%&quot; identified by &quot;1234&quot;;</span><br><span class="line">//@&quot;%&quot; 表示对所有非本地主机授权，不包括localhost。</span><br><span class="line">//对localhost授权：加上一句grant all privileges on exex.* to test@localhost identified by &apos;0Kq2Ejw9$cyj&apos;;即可。</span><br><span class="line"></span><br><span class="line">7.查询用户权限</span><br><span class="line">show grants for 用户;</span><br><span class="line"></span><br><span class="line">8.刷新</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">9.撤销权限</span><br><span class="line">revoke all on *.* from dba@localhost;登录</span><br><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、显示当前数据库服务器中的数据库列表：</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW DATABASES;</span><br><span class="line"></span><br><span class="line">2、建立数据库：</span><br><span class="line"></span><br><span class="line">mysql&gt; CREATE DATABASE 库名;</span><br><span class="line"></span><br><span class="line">3、授权用户：</span><br><span class="line">//&apos;%&apos;代表所有可访问</span><br><span class="line">grant all privileges on 库名.* to 用户名@localhost identified by &apos;1234&apos;;</span><br><span class="line"></span><br><span class="line">4、查询用户</span><br><span class="line">select user,host from mysql.user;</span><br><span class="line"></span><br><span class="line">insert into mysql.user(Host,User,Password) values(&quot;%&quot;,&quot;data&quot;,password(&quot;ccdnlabroot123456&quot;));</span><br><span class="line">5、创建用户</span><br><span class="line">create user &apos;data&apos;@&apos;%&apos; identified by &apos;0Kq2Ejw9$cyj&apos;; </span><br><span class="line"></span><br><span class="line">6.用户权限</span><br><span class="line">grant 权限 on 数据库.* to 用户名@登录主机 identified by &quot;密码&quot;;</span><br><span class="line">所有数据库的某些权限： 　 </span><br><span class="line">grant select,delete,update,create,drop on *.* to test@&quot;%&quot; identified by &quot;1234&quot;;</span><br><span class="line">//@&quot;%&quot; 表示对所有非本地主机授权，不包括localhost。</span><br><span class="line">//对localhost授权：加上一句grant all privileges on exex.* to test@localhost identified by &apos;0Kq2Ejw9$cyj&apos;;即可。</span><br><span class="line"></span><br><span class="line">7.查询用户权限</span><br><span class="line">show grants for 用户;</span><br><span class="line"></span><br><span class="line">8.刷新</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">9.撤销权限</span><br><span class="line">revoke all on *.* from dba@localhost;</span><br></pre></td></tr></table></figure>
+      
 
-        <div class="article-info info-on-right">
-          
-          
-
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/01/mysql/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/01/java/" class="archive-article-date">
-  	<time datetime="2019-11-01T08:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/01/java/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java如何完全复制一个对象</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/01/java/">Java如何完全复制一个对象</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -248,8 +328,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
