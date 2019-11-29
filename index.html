@@ -266,6 +266,91 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Spring Boot 整合 MyBatis 实现乐观锁和悲观锁" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/29/Spring%20Boot%20%E6%95%B4%E5%90%88%20MyBatis%20%E5%AE%9E%E7%8E%B0%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/" class="article-date">
+      <time datetime="2019-11-29T06:53:02.000Z" itemprop="datePublished">2019-11-29</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/29/Spring%20Boot%20%E6%95%B4%E5%90%88%20MyBatis%20%E5%AE%9E%E7%8E%B0%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/">Spring Boot 整合 MyBatis 实现乐观锁和悲观锁</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title: Spring Boot 整合 MyBatis 实现乐观锁和悲观锁</span><br></pre></td></tr></table></figure>
+
+<p>本文以转账操作为例，实现并测试乐观锁和悲观锁</p>
+<h2 id="死锁问题"><a href="#死锁问题" class="headerlink" title="死锁问题"></a>死锁问题</h2><table>
+<thead>
+<tr>
+<th><strong>时刻</strong></th>
+<th><strong>事务 1 (A 向 B 转账)</strong></th>
+<th><strong>事务 2 (B 向 A 转账)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T1</td>
+<td>Lock A</td>
+<td>Lock B</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Lock B (由于事务 2 已经 Lock A，等待)</td>
+<td>Lock A (由于事务 1 已经 Lock B，等待)</td>
+</tr>
+</tbody></table>
+<p>由于两个事务都在等待对方释放锁，于是死锁产生了，解决方案：按照主键的大小来加锁，总是先锁主键较小或较大的那行数据。</p>
+<blockquote>
+<p>完整代码：<a href="https://github.com/imcloudfloating/Lock_Demo" target="_blank" rel="noopener">https://github.com/imcloudfloating/Lock_Demo</a><br>GitHub Page：<a href="http://blog.cloudli.top/posts/Spring-Boot-&amp;-MyBatis-实现乐观锁和悲观锁/" target="_blank" rel="noopener">http://blog.cloudli.top/posts/Spring-Boot-&amp;-MyBatis-实现乐观锁和悲观锁/</a></p>
+</blockquote>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2019/11/29/Spring%20Boot%20%E6%95%B4%E5%90%88%20MyBatis%20%E5%AE%9E%E7%8E%B0%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-mysql" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
