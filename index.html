@@ -317,10 +317,6 @@
 <td>Lock A (由于事务 1 已经 Lock B，等待)</td>
 </tr>
 </tbody></table>
-<p>由于两个事务都在等待对方释放锁，于是死锁产生了，解决方案：按照主键的大小来加锁，总是先锁主键较小或较大的那行数据。</p>
-<blockquote>
-<p>完整代码：<a href="https://github.com/imcloudfloating/Lock_Demo" target="_blank" rel="noopener">https://github.com/imcloudfloating/Lock_Demo</a><br>GitHub Page：<a href="http://blog.cloudli.top/posts/Spring-Boot-&amp;-MyBatis-实现乐观锁和悲观锁/" target="_blank" rel="noopener">http://blog.cloudli.top/posts/Spring-Boot-&amp;-MyBatis-实现乐观锁和悲观锁/</a></p>
-</blockquote>
           
       
     </div>
