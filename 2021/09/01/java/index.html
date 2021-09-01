@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="wyl" />
+
+
+
+<meta name="description" content="1234567Java里的clone分为：** A:浅复制（浅克隆）: **浅复制仅仅复制所考虑的对象，而不复制它所引用的对象。B:深复制（深克隆）：深复制把要复制的对象所引用的对象都复制了一遍。Java中对象的克隆,为了获取对象的一份拷贝，我们可以利用Object类的clone()方法。必须要遵循下面三点：1.在派生类中覆盖基类的clone()方法，并声明为public【Object类中的cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java如何完全复制一个对象">
+<meta property="og:url" content="http://yoursite.com/2021/09/01/java/index.html">
+<meta property="og:site_name" content="wyl">
+<meta property="og:description" content="1234567Java里的clone分为：** A:浅复制（浅克隆）: **浅复制仅仅复制所考虑的对象，而不复制它所引用的对象。B:深复制（深克隆）：深复制把要复制的对象所引用的对象都复制了一遍。Java中对象的克隆,为了获取对象的一份拷贝，我们可以利用Object类的clone()方法。必须要遵循下面三点：1.在派生类中覆盖基类的clone()方法，并声明为public【Object类中的cl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/Users/gaia-develop/Documents/2915916-8a05c391e10fd1c2.png">
+<meta property="article:published_time" content="2021-09-01T05:05:50.026Z">
+<meta property="article:modified_time" content="2021-09-01T05:05:50.026Z">
+<meta property="article:author" content="wyl">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/Users/gaia-develop/Documents/2915916-8a05c391e10fd1c2.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="wyl" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java如何完全复制一个对象 | wyl</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">wyl</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">新人</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/yunlei.wang96@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/" target="_blank" rel="noopener">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">wyl</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">wyl</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">新人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/yunlei.wang96@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-java" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/09/01/java/" class="article-date">
+      <time datetime="2021-09-01T05:05:50.026Z" itemprop="datePublished">2021-09-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java如何完全复制一个对象
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <hr>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Java里的clone分为：</span><br><span class="line">** A:浅复制（浅克隆）: **浅复制仅仅复制所考虑的对象，而不复制它所引用的对象。</span><br><span class="line">B:深复制（深克隆）：深复制把要复制的对象所引用的对象都复制了一遍。</span><br><span class="line">Java中对象的克隆,为了获取对象的一份拷贝，我们可以利用Object类的clone()方法。必须要遵循下面三点：</span><br><span class="line">1.在派生类中覆盖基类的clone()方法，并声明为public【Object类中的clone()方法为protected的】。</span><br><span class="line">2.在派生类的clone()方法中，调用super.clone()。</span><br><span class="line">3.在派生类中实现Cloneable接口。 Object类里的clone方法是浅复制（浅克隆）</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h6 id="下面这段只是引言。具体示例请往下翻。"><a href="#下面这段只是引言。具体示例请往下翻。" class="headerlink" title="下面这段只是引言。具体示例请往下翻。"></a>下面这段只是引言。具体示例请往下翻。</h6><p>对于一个新手而言，让你复制一个对象，你可能觉得很简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;  </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> number;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumber</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> number;  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNumber</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.number = number;  </span><br><span class="line">  &#125;        </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;    </span><br><span class="line">    Student stu1 = <span class="keyword">new</span> Student();  </span><br><span class="line">    stu1.setNumber(<span class="number">12345</span>);  </span><br><span class="line">    Student stu2 = stu1;  </span><br><span class="line">    System.out.println(<span class="string">"学生1:"</span> + stu1.getNumber());  </span><br><span class="line">    System.out.println(<span class="string">"学生2:"</span> + stu2.getNumber());  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">学生1:12345  </span><br><span class="line">学生2:12345</span><br></pre></td></tr></table></figure>
+
+<p>这里我们自定义了一个学生类，该类只有一个number字段。<br> 我们新建了一个学生实例，然后将该值赋值给stu2实例。(<strong>Student stu2 = stu1;</strong>)<br> 再看看打印结果，作为一个新手，拍了拍胸腹，对象复制不过如此，<br> 难道真的是这样吗？</p>
+<h6 id="我们试着改变stu2实例的number字段，再打印结果看看："><a href="#我们试着改变stu2实例的number字段，再打印结果看看：" class="headerlink" title="我们试着改变stu2实例的number字段，再打印结果看看："></a>我们试着改变stu2实例的number字段，再打印结果看看：</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">stu2</span><span class="selector-class">.setNumber</span>(54321);   </span><br><span class="line"><span class="selector-tag">System</span><span class="selector-class">.out</span><span class="selector-class">.println</span>("学生1<span class="selector-pseudo">:"</span> + <span class="selector-tag">stu1</span><span class="selector-class">.getNumber</span>());  </span><br><span class="line"><span class="selector-tag">System</span><span class="selector-class">.out</span><span class="selector-class">.println</span>("学生2<span class="selector-pseudo">:"</span> + <span class="selector-tag">stu2</span><span class="selector-class">.getNumber</span>());</span><br></pre></td></tr></table></figure>
+
+<h6 id="打印结果："><a href="#打印结果：" class="headerlink" title="打印结果："></a>打印结果：</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">学生1<span class="selector-pseudo">:54321</span>  </span><br><span class="line">学生2<span class="selector-pseudo">:54321</span></span><br></pre></td></tr></table></figure>
+
+<p>完了，出问题了。为什么我改变了stu2的值，stu1也跟着改变了呢？<br> 原因出在(stu2 = stu1) 这一句。该语句的作用是将stu1的<strong>引用</strong>赋值给stu2。其实，stu1和stu2在堆内存中指向的是同一个对象。如图：</p>
+<p><img src="/Users/gaia-develop/Documents/2915916-8a05c391e10fd1c2.png" alt=""></p>
+<h6 id="正文开始"><a href="#正文开始" class="headerlink" title="正文开始"></a>正文开始</h6><p>那么，怎样才能达到复制一个对象呢？<br> 是否记得万类之王Object。它有11个方法，有两个protected的方法，其中一个为clone方法。<br> 该方法的签名是：<br> <strong>protected native Object clone() throws CloneNotSupportedException;</strong></p>
+<p>因为每个类直接或间接的父类都是Object，因此它们都含有clone()方法，但是因为该方法是protected，所以都不能在类外进行访问。<br> 要想对一个对象进行复制，就需要对clone方法覆盖。</p>
+<h6 id="一般步骤是（浅复制）："><a href="#一般步骤是（浅复制）：" class="headerlink" title="一般步骤是（浅复制）："></a>一般步骤是（浅复制）：</h6><ol>
+<li>被复制的类需要<strong>实现Clonenable接口</strong>（不实现的话在调用clone方法会抛出CloneNotSupportedException异常) 该接口为标记接口(不含任何方法)</li>
+<li><strong>覆盖clone()方法，访问修饰符设为public</strong>。方法中调用super.clone()方法得到需要的复制对象，（native为本地方法)</li>
+</ol>
+<p>下面对上面那个方法进行改造：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Student</span> <span class="title">implements</span> <span class="title">Cloneable</span>&#123;  </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> number;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumber</span>(<span class="params"></span>)</span> &#123;  </span><br><span class="line">    <span class="keyword">return</span> number;  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNumber</span>(<span class="params"><span class="keyword">int</span> number</span>)</span> &#123;  </span><br><span class="line">    <span class="keyword">this</span>.number = number;  </span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">@Override  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span>(<span class="params"></span>)</span> &#123;  </span><br><span class="line">    Student stu = <span class="literal">null</span>;  </span><br><span class="line">    <span class="keyword">try</span>&#123;  </span><br><span class="line">        stu = (Student)super.clone();  </span><br><span class="line">    &#125;<span class="keyword">catch</span>(CloneNotSupportedException e) &#123;  </span><br><span class="line">        e.printStackTrace();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> stu;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> &#123;        </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args[]</span>)</span> &#123;            </span><br><span class="line">    Student stu1 = <span class="keyword">new</span> Student();  </span><br><span class="line">    stu1.setNumber(<span class="number">12345</span>);  </span><br><span class="line"></span><br><span class="line">    Student stu2 = (Student)stu1.clone();  </span><br><span class="line">    System.<span class="keyword">out</span>.println(<span class="string">"学生1:"</span> + stu1.getNumber());  </span><br><span class="line">    System.<span class="keyword">out</span>.println(<span class="string">"学生2:"</span> + stu2.getNumber());  </span><br><span class="line">      </span><br><span class="line">    stu2.setNumber(<span class="number">54321</span>);  </span><br><span class="line">    System.<span class="keyword">out</span>.println(<span class="string">"学生1:"</span> + stu1.getNumber());  </span><br><span class="line">    System.<span class="keyword">out</span>.println(<span class="string">"学生2:"</span> + stu2.getNumber());  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="打印结果：-1"><a href="#打印结果：-1" class="headerlink" title="打印结果："></a>打印结果：</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">学生1<span class="selector-pseudo">:12345</span>  </span><br><span class="line">学生2<span class="selector-pseudo">:12345</span>  </span><br><span class="line">学生1<span class="selector-pseudo">:12345</span>  </span><br><span class="line">学生2<span class="selector-pseudo">:54321</span></span><br></pre></td></tr></table></figure>
+
+<p>到这里，一个简单的浅复制就OK了。</p>
+<h6 id="2-深复制（深Clone）例子："><a href="#2-深复制（深Clone）例子：" class="headerlink" title="2.深复制（深Clone）例子："></a>2.深复制（深Clone）例子：</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeepCloneTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// teacher对象将不被clone出来的Student对象共享.</span></span><br><span class="line">        Teacher teacher = <span class="keyword">new</span> Teacher();</span><br><span class="line">        teacher.setAge(<span class="number">40</span>);</span><br><span class="line">        teacher.setName(<span class="string">"Teacher zhang"</span>);</span><br><span class="line"></span><br><span class="line">        Student student1 = <span class="keyword">new</span> Student();</span><br><span class="line">        student1.setAge(<span class="number">20</span>);</span><br><span class="line">        student1.setName(<span class="string">"zhangsan"</span>);</span><br><span class="line">        student1.setTeacher(teacher);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 复制出来一个对象student2</span></span><br><span class="line">        Student student2 = (Student) student1.clone();</span><br><span class="line">        System.out.println(student2.getAge());</span><br><span class="line">        System.out.println(student2.getName());</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"~~~~~~~~~~~~~~~~~~~~~~"</span>);</span><br><span class="line">        System.out.println(student1.getTeacher().getAge());</span><br><span class="line">        System.out.println(student1.getTeacher().getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改student2的引用对象</span></span><br><span class="line">        student2.getTeacher().setAge(<span class="number">50</span>);</span><br><span class="line">        student2.getTeacher().setName(<span class="string">"Teacher Li"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"~~~~~~~~~~~~~~~~~~~~~~"</span>);</span><br><span class="line">        System.out.println(student1.getTeacher().getAge());</span><br><span class="line">        System.out.println(student1.getTeacher().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> Teacher teacher;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Teacher <span class="title">getTeacher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> teacher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTeacher</span><span class="params">(Teacher teacher)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.teacher = teacher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        Student student = (Student) <span class="keyword">super</span>.clone();</span><br><span class="line">        <span class="comment">// 将引用的对象teacher也clone下</span></span><br><span class="line">        student.setTeacher((Teacher) (student.getTeacher().clone()));</span><br><span class="line">        <span class="keyword">return</span> student;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="打印结果：-2"><a href="#打印结果：-2" class="headerlink" title="打印结果："></a>打印结果：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">20</span><br><span class="line">zhangsan</span><br><span class="line">~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">40</span><br><span class="line">Teacher zhang</span><br><span class="line">~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">40</span><br><span class="line">Teacher zhang</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-利用序列化来做深复制"><a href="#3-利用序列化来做深复制" class="headerlink" title="3.利用序列化来做深复制"></a>3.利用序列化来做深复制</h6><p>把对象写到流里的过程是序列化（Serilization）过程，而把对象从流中读出来的过程则叫做反序列化（Deserialization）过程。**应当指出的是，写在流里的是对象的一个拷贝，而原对象仍然存在于JVM里面。利用这个特性，可以做深拷贝 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;  </span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;  </span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;  </span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;  </span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;  </span><br><span class="line"><span class="comment">//利用序列化来做深复制  </span></span><br><span class="line"><span class="comment">//深clone  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeepCloneTest</span>  </span></span><br><span class="line"><span class="class"></span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="comment">// teacher对象将不被clone出来的Student对象共享.  </span></span><br><span class="line">        Teacher teacher = <span class="keyword">new</span> Teacher();  </span><br><span class="line">        teacher.setAge(<span class="number">40</span>);  </span><br><span class="line">        teacher.setName(<span class="string">"Teacher zhang"</span>);  </span><br><span class="line">  </span><br><span class="line">        Student student1 = <span class="keyword">new</span> Student();  </span><br><span class="line">        student1.setAge(<span class="number">20</span>);  </span><br><span class="line">        student1.setName(<span class="string">"zhangsan"</span>);  </span><br><span class="line">        student1.setTeacher(teacher);  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// 复制出来一个对象student2  </span></span><br><span class="line">        Student student2 = (Student) student1.deepCopy();  </span><br><span class="line">        System.out.println(student2.getAge());  </span><br><span class="line">        System.out.println(student2.getName());  </span><br><span class="line">  </span><br><span class="line">        System.out.println(<span class="string">"~~~~~~~~~~~~~~~~~~~~~~"</span>);  </span><br><span class="line">        System.out.println(student1.getTeacher().getAge());  </span><br><span class="line">        System.out.println(student1.getTeacher().getName());  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// 修改student2的引用对象  </span></span><br><span class="line">        student2.getTeacher().setAge(<span class="number">50</span>);  </span><br><span class="line">        student2.getTeacher().setName(<span class="string">"Teacher Li"</span>);  </span><br><span class="line">  </span><br><span class="line">        System.out.println(<span class="string">"~~~~~~~~~~~~~~~~~~~~~~"</span>);  </span><br><span class="line">        System.out.println(student1.getTeacher().getAge());  </span><br><span class="line">        System.out.println(student1.getTeacher().getName());  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">implements</span> <span class="title">Serializable</span>  </span></span><br><span class="line"><span class="class"></span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">8834559347461591191L</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;  </span><br><span class="line">    <span class="keyword">public</span> String name;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> age;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.age = age;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Serializable</span>  </span></span><br><span class="line"><span class="class"></span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// serialVersionUID  </span></span><br><span class="line">    <span class="comment">// 如果你的对象序列化后存到硬盘上面后，可是后来你却更改了类的field(增加或减少或改名)，当你</span></span><br><span class="line">    <span class="comment">// 反序列化时，就会出现Exception的，这样就会造成不兼容性的问题。  </span></span><br><span class="line">    <span class="comment">// 但当serialVersionUID相同时，它就会将不一样的field以type的</span></span><br><span class="line">    <span class="comment">// 缺省值赋值(如int型的是0,String型的是null等)，这个可以避开不兼容性的问题。</span></span><br><span class="line">    <span class="comment">// 所以最好给serialVersionUID赋值  </span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">7991552226614088458L</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;  </span><br><span class="line">    <span class="keyword">public</span> String name;  </span><br><span class="line">    <span class="keyword">public</span> Teacher teacher;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> age;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.age = age;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Teacher <span class="title">getTeacher</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> teacher;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTeacher</span><span class="params">(Teacher teacher)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="keyword">this</span>.teacher = teacher;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">deepCopy</span><span class="params">()</span> <span class="keyword">throws</span> Exception  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        <span class="comment">// 将该对象序列化成流,因为写在流里的是对象的一个拷贝，而原对象仍然存在于JVM里面。</span></span><br><span class="line">        <span class="comment">// 所以利用这个特性可以实现对象的深拷贝。  </span></span><br><span class="line">        ByteArrayOutputStream bos = <span class="keyword">new</span> ByteArrayOutputStream();  </span><br><span class="line">  </span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(bos);  </span><br><span class="line">  </span><br><span class="line">        oos.writeObject(<span class="keyword">this</span>);  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// 将流序列化成对象  </span></span><br><span class="line">        ByteArrayInputStream bis = <span class="keyword">new</span> ByteArrayInputStream(bos.toByteArray());  </span><br><span class="line">  </span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(bis);  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">return</span> ois.readObject();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="打印结果：-3"><a href="#打印结果：-3" class="headerlink" title="打印结果："></a>打印结果：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">20  </span><br><span class="line">zhangsan  </span><br><span class="line">~~~~~~~~~~~~~~~~~~~~~~  </span><br><span class="line">40  </span><br><span class="line">Teacher zhang  </span><br><span class="line">~~~~~~~~~~~~~~~~~~~~~~  </span><br><span class="line">40  </span><br><span class="line">Teacher zhang</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2021/09/01/java/">Java如何完全复制一个对象</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">wyl</a></p>
+        <p><span>Created:</span>2021-09-01, 13:05:50</p>
+        <p><span>Updated:</span>2021-09-01, 13:05:50</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2021/09/01/java/" title="Java如何完全复制一个对象">http://yoursite.com/2021/09/01/java/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2021/09/01/java/　　By wyl" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/09/01/%E6%A0%91%E8%8E%93%E6%B4%BEqtspeech/">
+                    树莓派qtspeech
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/09/01/mysql/">
+                    mysql 常用命令
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#下面这段只是引言。具体示例请往下翻。"><span class="toc-number">1.</span> <span class="toc-text">下面这段只是引言。具体示例请往下翻。</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#我们试着改变stu2实例的number字段，再打印结果看看："><span class="toc-number">2.</span> <span class="toc-text">我们试着改变stu2实例的number字段，再打印结果看看：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#打印结果："><span class="toc-number">3.</span> <span class="toc-text">打印结果：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#正文开始"><span class="toc-number">4.</span> <span class="toc-text">正文开始</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#一般步骤是（浅复制）："><span class="toc-number">5.</span> <span class="toc-text">一般步骤是（浅复制）：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#打印结果：-1"><span class="toc-number">6.</span> <span class="toc-text">打印结果：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-深复制（深Clone）例子："><span class="toc-number">7.</span> <span class="toc-text">2.深复制（深Clone）例子：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#打印结果：-2"><span class="toc-number">8.</span> <span class="toc-text">打印结果：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-利用序列化来做深复制"><span class="toc-number">9.</span> <span class="toc-text">3.利用序列化来做深复制</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#打印结果：-3"><span class="toc-number">10.</span> <span class="toc-text">打印结果：</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java如何完全复制一个对象　| wyl　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/09/01/%E6%A0%91%E8%8E%93%E6%B4%BEqtspeech/" title="Pre: 树莓派qtspeech">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/09/01/mysql/" title="Next: mysql 常用命令">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/Hexo%E6%8A%A5%E9%94%99Usage%20hexo%20command%E5%A4%84%E7%90%86%E5%8F%8A%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/">Hexo报错Usage hexo command处理及图片显示问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/hexo%20%E6%8A%A5%E9%94%99%20use_date_for_updated%20is%20deprecated/">hexo 报错 use_date_for_updated is deprecated</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9B%B4%E6%8D%A2apt-get%E6%BA%90/">树莓派更换apt-get源</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/%E6%A0%91%E8%8E%93%E6%B4%BEqtspeech/">树莓派qtspeech</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/java/">Java如何完全复制一个对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/mysql/">mysql 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/01/Spring%20Boot%20%E6%95%B4%E5%90%88%20MyBatis%20%E5%AE%9E%E7%8E%B0%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/">Spring Boot 整合 MyBatis 实现乐观锁和悲观锁</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2021 wyl
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
